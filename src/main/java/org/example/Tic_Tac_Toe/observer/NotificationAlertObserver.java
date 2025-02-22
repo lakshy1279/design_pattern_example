@@ -1,2 +1,6 @@
-package org.example.Tic_Tac_Toe.observer;public interface NotificationAlertObserver {
+package org.example.Tic_Tac_Toe.observer;
+
+public interface NotificationAlertObserver {
+
+   void update();
 }
