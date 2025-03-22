@@ -37,19 +37,21 @@ abstract class VideoPlayer {
 }
 
 
-// Refined Abstraction
-class AdvancedVideoPlayer extends VideoPlayer {
-    private PlaybackStrategy strategy;
+// Strategy Interface
+interface PlaybackStrategy {
+    void execute(String fileName);
+}
 
-    public AdvancedVideoPlayer(PlatformAPI platform, PlaybackStrategy strategy) {
-        super(platform);
-        this.strategy = strategy;
+// Concrete Strategies
+class NormalPlayback implements PlaybackStrategy {
+    public void execute(String fileName) {
+        System.out.println("Playing normally: " + fileName);
     }
+}
 
-    @Override
-    void play(String fileName) {
-        platform.renderVideo(fileName);    // Bridge part
-        strategy.execute(fileName);        // Strategy part
+class FastForwardPlayback implements PlaybackStrategy {
+    public void execute(String fileName) {
+        System.out.println("Fast forwarding: " + fileName);
     }
 }
 
@@ -81,3 +83,10 @@ public class Client {
     }
 }
 
+
+// Use Bridge:
+
+// When you have two orthogonal hierarchies that will evolve independently.
+// Example: If you have many types of playback behaviors (Normal, Fast-forward, Slow-mo)
+//  AND many types of players (AudioPlayer, VideoPlayer, LiveStreamPlayer), 
+//  using a Bridge between Player ↔ PlaybackBehavior makes sense.
